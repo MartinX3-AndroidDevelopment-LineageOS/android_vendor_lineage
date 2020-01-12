@@ -172,6 +172,7 @@ def add_to_manifest(repositories, fallback_branch = None):
         lm = ElementTree.Element("manifest")
 
     for repository in repositories:
+        remote_name = repository.get('remote') or "MartinX3-AndroidDevelopment-LineageOS"
         repo_name = repository['repository']
         repo_target = repository['target_path']
         print('Checking if %s is fetched from %s' % (repo_target, repo_name))
@@ -181,7 +182,7 @@ def add_to_manifest(repositories, fallback_branch = None):
 
         print('Adding dependency: MartinX3-AndroidDevelopment-LineageOS/%s -> %s' % (repo_name, repo_target))
         project = ElementTree.Element("project", attrib = { "path": repo_target,
-            "remote": "github", "name": "MartinX3-AndroidDevelopment-LineageOS/%s" % repo_name })
+            "remote": "github", "name": "%s/%s" % (remote_name, repo_name) })
 
         if 'branch' in repository:
             project.set('revision',repository['branch'])
